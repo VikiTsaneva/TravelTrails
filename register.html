@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <h2>Регистрация</h2>
+        <form id="registerForm">
+            <input type="text" name="username" placeholder="Потребителско име" required>
+            <input type="password" name="password" placeholder="Парола" required>
+            <button type="submit">Регистрирай се</button>
+        </form>
+        <p>Вече имате профил? <a href="/login">Влезте</a></p>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('/api/register', {
+                method: 'POST',
+                body: JSON.stringify(Object.fromEntries(formData)),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                if (data.message === 'Регистрацията е успешна!') {
+                    window.location.href = '/login'; // Пренасочване към страницата за вход
+                }
+            })
+            .catch(error => console.error('Грешка:', error));
+        });
+    </script>
+</body>
+</html>

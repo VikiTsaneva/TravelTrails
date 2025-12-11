@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генериране на маршрут</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="gabrovoroute.css">
+</head>
+<body>
+    <header>
+        <h1>Генериране на маршрут</h1>
+    </header>
+
+    <div id="map"></div>
+
+    <div class="day-buttons" id="day-buttons">
+        <!-- Бутоните за дни ще се генерират динамично -->
+    </div>
+
+    <div class="route-info" id="route-info">
+        <!-- Информацията за маршрута ще се показва тук -->
+    </div>
+
+    <div class="error-message" id="error-message"></div>
+
+    <div class="clear-route">
+        <button onclick="clearRoute()">Изчисти маршрута и се върни</button>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="gabrovoroute.js"></script>
+</body>
+</html>

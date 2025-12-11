@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Туристически обекти в област Габрово</title>
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link rel="stylesheet" href="gabrovotour.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" style="position: absolute; left: 20px; top: 20px; text-decoration: none; color: white; font-size: 24px;">
+            <i class="uil uil-arrow-left"></i> <!-- Иконка за връщане назад -->
+        </a>
+        <h1>Туристически обекти в област Габрово</h1>
+        <div class="top-controls">
+            <div></div>
+        </div>
+    </header>
+
+    <div class="city-buttons">
+        <button onclick="loadCity('gabrovo')">Габрово</button>
+        <button onclick="loadCity('dryanovo')">Дряново</button>
+        <button onclick="loadCity('tryavna')">Трявна</button>
+        <button onclick="loadCity('sevliew')">Севлиево</button>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" id="search" placeholder="Търсете обект по име...">
+    </div>
+    
+    <div class="controls">
+        <select id="days">
+            <option value="1">1 ден</option>
+            <option value="2">2 дни</option>
+            <option value="3">3 дни</option>
+            <option value="4">4 дни</option>
+            <option value="5">5 дни</option>
+            <option value="6">6 дни</option>
+            <option value="7">7 дни</option>
+        </select>
+        <select id="direction">
+            <option value="north">Север</option>
+            <option value="south">Юг</option>
+            <option value="east">Изток</option>
+            <option value="west">Запад</option>
+        </select>
+    </div>
+
+    <div class="grid" id="object-grid">
+        <!-- Обектите ще се зареждат тук чрез JavaScript -->
+    </div>
+
+    <div class="pagination">
+        <button id="prev">❮</button>
+        <span id="page-numbers"></span>
+        <button id="next">❯</button>
+    </div>
+
+    <div class="generate-btn">
+        <a href="gabrovoroute.html" id="generate-route">Генериране на маршрут</a>
+    </div>
+
+    <script src="gabrovotour.js"></script>
+</body>
+</html>

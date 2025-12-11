@@ -1,0 +1,85 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+#map {
+    height: 500px;
+    width: 100%;
+    margin-top: 20px;
+}
+.day-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+.day-buttons button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.day-buttons button:hover {
+    background-color: #45a049;
+}
+.route-info {
+    margin: 20px;
+    padding: 15px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+}
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+}
+.clear-route {
+    text-align: center;
+    margin-top: 20px;
+}
+.clear-route button {
+    padding: 10px 20px;
+    background-color: #ff5622ee;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.clear-route button:hover {
+    background-color: #f9501d;
+    transform: scale(1.05);
+}
+.clear-route button:active {
+    transform: scale(0.95);
+}
+/* Зелен бутон за интеграция */
+.integrate-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.integrate-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+.integrate-button:active {
+    transform: scale(0.95);
+}

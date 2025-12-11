@@ -1,0 +1,643 @@
+/* Глобални настройки */
+* {
+    box-sizing: border-box;
+}
+html, body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* Основен стил на тялото */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #f4f8f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Навигационна лента */
+.navbar {
+    background: #3a7a5a;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    padding: 10px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.3s ease;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+
+/* Преместване на логото наляво на мобилни устройства */
+@media (max-width: 768px) {
+    .logo-container {
+        transform: translateX(-40px); /* Премества логото наляво */
+    }
+
+    .logo {
+        width: 70px; /* Намаляваме размерите на логото за мобилни устройства */
+    }
+}
+
+/* Лого */
+.logo {
+    width: 90px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.nav-sections ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.nav-sections ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s, background-color 0.3s, transform 0.2s ease;
+}
+
+.nav-sections ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #8edb90;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav-sections ul li a i.icon {
+    color: #ffd700;
+    font-size: 18px;
+}
+
+/* Бутон с три черти за мобилното меню */
+.navbar-toggle {
+    display: none;
+    font-size: 28px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 1000;
+}
+
+.navbar-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Мобилно меню стилове */
+@media (max-width: 768px) {
+    .navbar-toggle {
+        display: block;
+    }
+
+    .nav-sections ul {
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-100%);
+        transition: transform 0.4s ease, opacity 0.4s;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+    }
+
+    .nav-sections.show ul {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .nav-sections ul li a {
+        font-size: 24px;
+        padding: 15px;
+        color: #ffffff;
+        display: block;
+        text-align: center;
+    }
+}
+
+/* Карта и региони */
+.map-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    background-color: #dff0e1;
+    width: 100%; /* Осигуряваме, че контейнерът ще заема 100% от ширината на екрана */
+    overflow: hidden; /* Това ще предотврати прекомерно излизане на картата извън видимото поле */
+    transform-origin: center;
+}
+
+/* За мобилни устройства */
+@media (max-width: 768px) {
+    .map-container {
+        height: 80vh; /* Намаляваме височината на контейнера за мобилни устройства */
+    }
+
+    .map-container svg {
+        width: 100%; /* Картата ще заема 100% от ширината на контейнера */
+        height: auto; /* Височината ще се адаптира автоматично */
+        max-height: 80vh; /* Ограничаваме максималната височина */
+        transform: none; /* Премахваме трансформациите */
+    }
+}
+
+@media (max-width: 480px) {
+    .map-container {
+        height: 70vh; /* Намаляваме височината на контейнера за по-малки устройства */
+    }
+
+    .map-container svg {
+        width: 100%; /* Картата ще заема 100% от ширината на контейнера */
+        max-height: 70vh; /* Ограничаваме максималната височина */
+        transform: none; /* Премахваме трансформациите */
+    }
+}
+
+/* Стандартни размери на картата */
+.map-container svg {
+    width: 100%;
+    height: auto;
+    max-height: 85vh;
+    display: block;
+    margin: 0 auto;
+    transform: translate(-20px, 40px); /* Преместване наляво (-10px) и надолу (+20px) */
+    transform-origin: center; /* Центрира трансформацията около средата на SVG */
+}
+
+.region {
+    cursor: pointer;
+    fill: #8edb90;
+    stroke: #56ab2f;
+    stroke-width: 0.8px;
+    transition: fill 0.5s ease, transform 0.3s;
+}
+
+.region:hover {
+    fill: #2f855a;
+    transform: scale(1.03);
+}
+
+.region-label {
+    font-size: 10px;
+    font-weight: bold;
+    fill: #333333;
+    text-anchor: middle;
+}
+
+/* Лента с бутони */
+.nav-buttons {
+    display: flex; /* Подрежда бутоните хоризонтално */
+    justify-content: space-between; /* Равномерно разпределение на бутоните */
+    align-items: center;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #4a7a56, #3a855a); /* Градиентен фон */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Сянка за 3D ефект */
+    width: 100%; /* Лентата заема пълната ширина */
+    height: 70px;
+    overflow: hidden;
+    transition: background-color 0.4s ease;
+}
+
+.nav-buttons:hover {
+    background: #2f855a; /* Тъмен цвят при задържане */
+}
+
+/* Стилове за бутони */
+.nav-buttons button {
+    font-size: 16px;
+    padding: 14px 25px;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(45deg, #3a7a5a, #2f855a);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    flex-grow: 1; /* Всеки бутон заема равномерно място */
+    text-align: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-buttons button:hover {
+    background: linear-gradient(45deg, #2f855a, #3a7a5a);
+    transform: translateY(-5px); /* Леко издигане при задържане */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Увеличена сянка при задържане */
+}
+
+.nav-buttons button:active {
+    transform: translateY(2px); /* Леко свиване при клик */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Примерни маршрути */
+.example-routes {
+    padding: 20px;
+    background: #f4f8f9;
+    text-align: center;
+}
+
+.example-routes h2 {
+    margin-bottom: 20px;
+    color: #2f855a;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.route-card {
+    display: inline-block;
+    width: 300px;
+    margin: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.route-card:hover {
+    transform: scale(1.05);
+}
+
+.route-card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.route-card h3 {
+    margin: 10px 0;
+    color: #2f855a;
+}
+
+.route-card ul {
+    padding-left: 20px;
+    list-style: none;
+}
+
+.route-card ul li::before {
+    content: "✔";
+    color: #2f855a;
+    margin-right: 5px;
+}
+
+.route-card button {
+    background: #3a7a5a;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.route-card button:hover {
+    background: #2f855a;
+}
+
+/* Секция "Контакти" */
+#contacts {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 700px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Лява колона с контактна информация */
+.contact-info {
+    width: 45%;
+    padding-right: 20px;
+    text-align: left;
+}
+
+.contact-info h3 {
+    font-size: 20px;
+    color: #3a7a5a;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.contact-info p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.contact-info i {
+    color: #3a7a5a;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* Дясна колона с контактна форма */
+.contact-form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #3a7a5a;
+    outline: none;
+}
+
+.contact-form button {
+    background-color: #3a7a5a;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+    background-color: #2f855a;
+}
+
+.contact-form button:active {
+    background-color: #22543d;
+}
+
+/* Мобилни стилове */
+@media (max-width: 768px) {
+    #contacts {
+        flex-direction: column;
+        padding: 30px 15px;
+    }
+
+    .contact-info,
+    .contact-form {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .contact-info h3 {
+        font-size: 22px;
+    }
+
+    .contact-info p {
+        font-size: 14px;
+    }
+}
+
+/* Допълнителни стилове за логото */
+.additional-logo {
+    width: 350px;
+    height: auto;
+    margin-left: 10px;
+    transform: translateX(40px);
+}
+
+/* Секция "За нас" */
+#about-us {
+    display: flex;
+    flex-direction: column; /* Подреждаме елементите вертикално */
+    justify-content: center; /* Центрираме съдържанието по вертикала */
+    align-items: center; /* Центрираме съдържанието по хоризонтала */
+    padding: 40px 20px; /* Поддържаме отстоянията вътре в секцията */
+    background: linear-gradient(135deg, #f4f8f9 0%, #dff0e1 100%); /* Лек градиент за фон */
+    color: #333; /* Основен текстов цвят */
+    text-align: center; /* Центриране на текст по подразбиране */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Лека сянка за ефект */
+    border-radius: 20px; /* Закръглени ъгли */
+    margin: 0; /* Премахваме излишните разстояния извън секцията */
+    width: 100vw; /* Заема 100% от ширината на екрана */
+    height: auto; /* Височината ще се адаптира към съдържанието */
+    font-family: 'Roboto', sans-serif; /* Шрифт за по-елегантен вид */
+    border-top: 4px solid #56ab2f; /* Тънък зелен контур в горната част */
+}
+
+/* Заглавия в секцията */
+#about-us h2 {
+    font-size: 48px; /* Голямо заглавие */
+    font-weight: bold;
+    color: #56ab2f; /* Зелен оттенък за заглавието */
+    margin-bottom: 20px; /* Разстояние под заглавието */
+    text-transform: uppercase; /* Всички букви в главни */
+    letter-spacing: 1px; /* Леко разширение на буквите */
+    text-align: center; /* Центриране на заглавието */
+}
+
+/* Подзаглавия */
+#about-us h3 {
+    font-size: 32px; /* Малко по-малко заглавие за подзаглавия */
+    color: #56ab2f; /* Зелен цвят за подзаглавия */
+    margin-bottom: 15px; /* Разстояние под подзаглавието */
+    font-weight: normal; /* Леко подчертаване на подзаглавията */
+    text-align: center; /* Центриране на подзаглавията */
+}
+
+/* Основен текст */
+#about-us .text-content p {
+    font-size: 18px; /* Размер на текста */
+    line-height: 1.8; /* Разстояние между редовете */
+    color: #555; /* По-светъл текст */
+    margin-bottom: 20px; /* Разстояние между абзаците */
+    max-width: 800px; /* Максимална ширина за по-добра четимост */
+    text-align: left; /* Подравняване на текста вляво */
+    margin: 0 auto; /* Центриране на текста */
+}
+
+/* Нови стилове за инструкциите */
+#about-us .instructions {
+    width: 100%; /* Заема 100% ширина */
+    text-align: left; /* Подравняване на текста вляво */
+    margin-top: 30px;
+}
+
+/* Стилизиране на абзаците с инструкции */
+#about-us .instructions p {
+    font-size: 18px; /* Размер на текста */
+    line-height: 1.8; /* Разстояние между редовете */
+    color: #333; /* Основен цвят за текста */
+    margin-bottom: 10px; /* Разстояние между елементите */
+    text-align: left; /* Подравняване на текста вляво */
+}
+
+/* Списъци с маркери за инструкции */
+#about-us .instructions ul {
+    list-style-type: none; /* Премахваме стандартните маркери за списъци */
+    padding: 0; /* Премахваме вътрешните отстояния */
+}
+
+#about-us .instructions ul li {
+    font-size: 16px; /* Размер на текста в списъка */
+    color: #333; /* Основен цвят за текста */
+    margin-bottom: 10px; /* Разстояние между елементите в списъка */
+    position: relative; /* За позициониране на стрелките */
+    padding-left: 30px; /* Разстояние отляво */
+}
+
+#about-us .instructions ul li::before {
+    content: "➡"; /* Използваме стрелка като маркер за списъка */
+    position: absolute;
+    left: 0; /* Позиционираме стрелката отляво */
+    top: 0; /* Позиционираме стрелката в началото на текста */
+    font-size: 20px; /* Размер на стрелката */
+    color: #56ab2f; /* Зелен цвят за стрелката */
+    margin-right: 10px; /* Интервал между стрелката и текста */
+}
+
+/* Стилизация на текста с акценти */
+#about-us .text-content p span {
+    color: #56ab2f; /* Зелен цвят за акцентиран текст */
+    font-weight: bold; /* Удебелен текст */
+}
+
+/* Анимация на текстовете */
+#about-us .text-content h2, #about-us .text-content p {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+#about-us.visible .text-content h2,
+#about-us.visible .text-content p {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Респонсивен дизайн за мобилни устройства */
+@media (max-width: 768px) {
+    #about-us {
+        padding: 40px 20px; /* Намалено отстояние за мобилни устройства */
+    }
+
+    #about-us h2 {
+        font-size: 28px; /* Намален размер на заглавието на мобилни устройства */
+    }
+
+    #about-us .text-content p {
+        font-size: 16px; /* Намален размер на текста на мобилни устройства */
+    }
+}
+
+/* Стил за текста за авторски права */
+#contacts p {
+    font-size: 14px; /* Размер на шрифта */
+    color: #555; /* Светло сив цвят за текста */
+    text-align: center; /* Центриране на текста */
+    margin-top: 20px; /* Разстояние отгоре */
+    margin-bottom: 0; /* Премахваме разстоянието отдолу */
+}
+
+#contacts p i {
+    color: #56ab2f; /* Зелен цвят за иконата, ако я използвате */
+    margin-right: 5px; /* Разстояние между иконата и текста */
+}
+
+/* Стилове за страниците за вход и регистрация */
+.auth-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.auth-container h2 {
+    margin-bottom: 20px;
+    color: #3a7a5a;
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.auth-container button {
+    width: 100%;
+    padding: 10px;
+    background: #3a7a5a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.auth-container button:hover {
+    background: #2f855a;
+}
+
+.auth-container p {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+.auth-container a {
+    color: #3a7a5a;
+    text-decoration: none;
+}
+
+.auth-container a:hover {
+    text-decoration: underline;
+}

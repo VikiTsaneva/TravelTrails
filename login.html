@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <h2>Вход</h2>
+        <form id="loginForm">
+            <input type="text" name="username" placeholder="Потребителско име" required>
+            <input type="password" name="password" placeholder="Парола" required>
+            <button type="submit">Влез</button>
+        </form>
+        <p>Нямате профил? <a href="/register">Регистрирайте се</a></p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('/api/login', {
+                method: 'POST',
+                body: JSON.stringify(Object.fromEntries(formData)),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                if (data.message === 'Входът е успешен!') {
+                    // Запазване на информацията за потребителя в localStorage
+                    localStorage.setItem('loggedIn', 'true');
+                    localStorage.setItem('username', data.username);
+                    window.location.href = '/'; // Пренасочване към началната страница
+                }
+            })
+            .catch(error => console.error('Грешка:', error));
+        });
+    </script>
+</body>
+</html>

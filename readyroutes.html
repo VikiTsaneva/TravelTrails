@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Готов маршрут в София</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Georgia', serif;
+            color: #2c3e50;
+            margin: 20px 0;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        #map {
+            height: 500px;
+            width: 90%;
+            margin: 20px auto;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #route-info {
+            width: 90%;
+            margin: 20px auto;
+            padding: 25px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+            color: #333;
+        }
+
+        #route-info h2 {
+            font-family: 'Georgia', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        #route-info p {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        .route-details {
+            margin-top: 15px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        .popup-content img {
+            max-width: 100%;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .leaflet-popup-content {
+            max-width: 250px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #route-info a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 25px;
+            font-size: 1em;
+            background-color: #3a7a5a; /* Зелен цвят за бутона */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        #route-info a:hover {
+            background-color: #2e6047; /* По-тъмен зелен цвят при hover */
+            transform: scale(1.05);
+        }
+
+        /* Зелен акцент за разделителна линия */
+        .green-divider {
+            width: 100%;
+            height: 2px;
+            background-color: #3a7a5a;
+            margin: 20px 0;
+        }
+
+        /* Зелен акцент за някои текстове */
+        .green-text {
+            color: #3a7a5a;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            #map {
+                height: 300px;
+            }
+
+            #route-info {
+                font-size: 16px;
+            }
+
+            .popup-content img {
+                max-height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Маршрут из София</h1>
+    <div id="map"></div>
+
+    <div id="route-info">
+        <h2>Информация за маршрута</h2>
+        <div class="green-divider"></div> <!-- Зелена разделителна линия -->
+        <p id="total-distance">Общо разстояние: <span class="green-text">0 км</span></p>
+        <p id="segment-distances">Разстояние между обектите:</p>
+        <div class="route-details" id="route-details"></div>
+        <div class="green-divider"></div> <!-- Зелена разделителна линия -->
+        <a href="#" target="_blank">Отворете маршрута в Google Maps</a>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+    <script>
+        // Инициализиране на картата
+        const map = L.map('map').setView([42.6977, 23.3219], 13); // Център на София
+
+        // Добавяне на стил за картата
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        // Координати на обектите
+        const museumCoords =[42.6996, 23.3235] ;  // Регионален исторически музей
+        const theatreCoords = [42.6955, 23.3269]; // Народен театър
+        const ndkCoords = [42.6854, 23.3191];     // НДК
+
+        // Добавяне на маркери с popups
+        const museumMarker = L.marker(museumCoords).addTo(map).bindPopup(`
+            <div class="popup-content">
+                <img src="images2.jpg" alt="Регионален исторически музей">
+                <h3>Регионален исторически музей</h3>
+                <p>Адрес: Banski Sq, пл. "Бански" 1, 1000 София</p>
+            </div>
+        `);
+
+        const theatreMarker = L.marker(theatreCoords).addTo(map).bindPopup(`
+            <div class="popup-content">
+                <img src="images.jpg" alt="Народен театър „Иван Вазов“">
+                <h3>Народен театър „Иван Вазов“</h3>
+                <p>Адрес: ул. "Дякон Игнатий" 5, 1000 София</p>
+            </div>
+        `);
+
+        const ndkMarker = L.marker(ndkCoords).addTo(map).bindPopup(`
+            <div class="popup-content">
+                <img src="ndk.jpg" alt="Национален дворец на културата (НДК)">
+                <h3>Национален дворец на културата (НДК)</h3>
+                <p>Адрес: бул. "България", 1463 София</p>
+            </div>
+        `);
+
+        // Маршрут и разстояния
+        const routeCoords = [museumCoords, theatreCoords, ndkCoords];
+        const objectNames = ['Регионален исторически музей', 'Народен театър „Иван Вазов“', 'Национален дворец на културата (НДК)'];
+
+        let totalDistance = 0;
+        let segmentDistances = [];
+
+        for (let i = 0; i < routeCoords.length - 1; i++) {
+            const from = routeCoords[i];
+            const to = routeCoords[i + 1];
+
+            const segmentDistance = map.distance(from, to);
+            segmentDistances.push(segmentDistance);
+            totalDistance += segmentDistance;
+        }
+
+        const toKilometers = (meters) => (meters / 1000).toFixed(2);
+
+        document.getElementById('total-distance').innerHTML = `Общо разстояние: <span class="green-text">${toKilometers(totalDistance)} км</span>`;
+
+        let segmentText = '';
+        segmentDistances.forEach((distance, index) => {
+            segmentText += ` Обект "${objectNames[index]}" и "${objectNames[index + 1]}": <span class="green-text">${toKilometers(distance)} км</span><br>`;
+        });
+        document.getElementById('segment-distances').innerHTML = segmentText;
+
+        L.polyline(routeCoords, { color: '#3a7a5a' }).addTo(map); // Зелена линия за маршрута
+
+        const googleMapsUrl = `https://www.google.com/maps/dir/${museumCoords[0]},${museumCoords[1]}/${theatreCoords[0]},${theatreCoords[1]}/${ndkCoords[0]},${ndkCoords[1]}`;
+        const googleMapsLink = document.querySelector('#route-info a');
+        googleMapsLink.href = googleMapsUrl;
+    </script>
+
+</body>
+</html>
